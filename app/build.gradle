@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
@@ -118,6 +118,7 @@ dependencies {
     implementation("io.coil-kt:coil:2.0.0-rc03")
 
     // Pallete
+    //noinspection GradleCompatible
     implementation 'com.android.support:palette-v7:28.0.0'
 
 }
