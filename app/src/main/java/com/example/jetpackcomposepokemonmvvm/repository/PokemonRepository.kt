@@ -1,6 +1,5 @@
 package com.example.jetpackcomposepokemonmvvm.repository
 
-import android.util.Log
 import com.example.jetpackcomposepokemonmvvm.data.remote.PokeApi
 import com.example.jetpackcomposepokemonmvvm.data.remote.responses.Pokemon
 import com.example.jetpackcomposepokemonmvvm.data.remote.responses.PokemonList
@@ -12,9 +11,9 @@ import javax.inject.Inject
 class PokemonRepository @Inject constructor(
     private val api: PokeApi,
 ){
-    suspend fun getPokemonList(limit: Int): Resource<PokemonList> {
+    suspend fun getPokemonList(limit: Int, offset: Int): Resource<PokemonList> {
         val response = try {
-            api.getPokemonList(limit)
+            api.getPokemonList(limit,offset)
         } catch (e: Exception) {
             return Resource.Error(message = "An unknown error occured")
         }
@@ -25,10 +24,8 @@ class PokemonRepository @Inject constructor(
         val response = try {
             api.getPokemonInfo(pokemonName)
         }catch (e: Exception) {
-            Log.e("response",e.message!!)
             return Resource.Error("An unknown error occured")
         }
-        Log.e("response","name response "+ response.name)
         return  Resource.Success(response)
     }
 }
