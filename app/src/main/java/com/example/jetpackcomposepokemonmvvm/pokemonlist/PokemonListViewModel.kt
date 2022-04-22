@@ -4,8 +4,11 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.nfc.tech.MifareUltralight.PAGE_SIZE
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
@@ -19,6 +22,7 @@ import com.example.jetpackcomposepokemonmvvm.util.Constants
 import com.example.jetpackcomposepokemonmvvm.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -39,7 +43,12 @@ class  PokemonListViewModel @Inject constructor(
     }
 
 
+    @Composable
+    fun myapp() {
+        val state = rememberScaffoldState()
+        val scope = rememberCoroutineScope()
 
+    }
     fun searchPokemonByName(name: String) {
         val listToSearch = if (isSearchStarting) {
             pokemonList.value
@@ -78,7 +87,7 @@ class  PokemonListViewModel @Inject constructor(
     }
 
     fun loadPokemonpaginated(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             val result = repository.getPokemonList(Constants.PAGE_SIZE)
             when(result) {
                 is Resource.Success -> {
